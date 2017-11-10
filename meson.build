@@ -7,3 +7,5 @@ slib = shared_library('sorter', 'sorter.cpp',
 
 executable('sorttest', 'sorttest.c',
   link_with : slib)
+
+executable('csort', 'csort.c')
