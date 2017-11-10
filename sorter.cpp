@@ -4,6 +4,7 @@
 #include<cstdlib>
 #include<dlfcn.h>
 #include<unistd.h>
+#include<assert.h>
 
 const char *fn_template = R"(
 #include<algorithm>
@@ -29,10 +30,11 @@ extern "C" sorter build_sorter(const char *type_str, const char *compare_str) {
     FILE *f = fopen("tmpfile.cpp", "w");
     fwrite(code.c_str(), code.size(), 1, f);
     fclose(f);
-    system("c++ -O2 -g -shared -fPIC -o libtemp.so tmpfile.cpp");
+    assert(system("c++ -O2 -g -shared -fPIC -o libtemp.so tmpfile.cpp") == 0);
     void *h = dlopen("libtemp.so", RTLD_LAZY);
-    unlink("libtemp.so");
-    unlink("tempfile.cpp");
+    assert(unlink("libtemp.so") == 0);
+    assert(unlink("tmpfile.cpp") == 0);
     void *ptr = dlsym(h, "sort_impl");
+    assert(ptr != nullptr);
     return (sorter)ptr;
 }
