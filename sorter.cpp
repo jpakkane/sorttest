@@ -9,11 +9,9 @@
 const char *fn_template = R"(
 #include<algorithm>
 
-LESS_FUNC
-
 extern "C" void sort_impl(void *data, TYPENAME size) {
   TYPENAME * typed_data = reinterpret_cast<TYPENAME*>(data);
-  std::sort(typed_data, typed_data + size, is_less);
+  std::sort(typed_data, typed_data + size, []LESS_FUNC);
 }
 )";
 
