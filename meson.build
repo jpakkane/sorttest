@@ -9,3 +9,4 @@ executable('sorttest', 'sorttest.c',
   link_with : slib)
 
 executable('csort', 'csort.c')
+executable('cppsort', 'cppsort.cpp')
